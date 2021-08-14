@@ -26,7 +26,7 @@ public class ChatRoom {
     @Enumerated(EnumType.STRING)
     private RoomStatus roomStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Mission mission;
 
     @Builder

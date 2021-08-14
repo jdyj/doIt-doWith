@@ -1,6 +1,7 @@
 package doGood.doIt.service;
 
 import doGood.doIt.domain.*;
+import doGood.doIt.dto.AcceptMissionRequest;
 import doGood.doIt.dto.MissionDto;
 import doGood.doIt.dto.MissionFriendAddRequest;
 import doGood.doIt.dto.MissionFriendDto;
@@ -85,7 +86,7 @@ public class MissionService {
         MissionDetailResponse response = new MissionDetailResponse(mission.getId(),
                 mission.getName(), mission.getSponser(), mission.getStartDate(), mission.getEndDate(), mission.getNumberOfParticipants(),
                 detailedImageUrls,
-                memberMissionRepository.findMemberMissionByMemberAndMission(member, mission).getIsCheck());
+                memberMissionRepository.findMemberMissionByMemberAndMission(member, mission).getIsActive());
 
         return response;
     }
@@ -123,6 +124,36 @@ public class MissionService {
         return new MissionFriendListResponse(collect.size(), collect);
     }
 
+    public void acceptMissionFriend(AcceptMissionRequest request) {
+
+        Mission mission = missionRepository.findById(request.getMissionId()).get();
+        Member friend = memberRepository.findById(request.getFriendId()).get();
+
+        List<ChatRoom> chatRooms = chatRoomRepository.findChatRoomsByMission(mission);
+        List<MemberChatRoom> memberChatRooms = memberChatRoomRepository.findMemberChatRoomsByMember(friend);
+
+        ChatRoom chatRoom1 = null;
+
+        for(ChatRoom chatRoom : chatRooms) {
+            for(MemberChatRoom memberChatRoom : memberChatRooms) {
+                if (chatRoom.getId().equals(memberChatRoom.getId())) {
+                    chatRoom1 = chatRoom;
+                    break;
+                }
+            }
+        }
+
+        Member member = memberRepository.findById(request.getMemberId()).get();
+
+        MemberChatRoom memberChatRoom = MemberChatRoom.builder()
+                .chatRoom(chatRoom1)
+                .member(member)
+                .build();
+
+        memberChatRoomRepository.save(memberChatRoom);
+
+    }
+
     public void MissionInviteFriend(MissionFriendAddRequest request) {
 
         Mission mission = missionRepository.findById(request.getMissionId()).get();
@@ -147,12 +178,10 @@ public class MissionService {
                 .collect(Collectors.toList());
 
         List<MemberMission> memberMissions = friends.stream()
-                .map(friend -> MemberMission.builder().mission(mission).member(friend).isCheck(true).build())
+                .map(friend -> MemberMission.builder().mission(mission).member(friend).isActive(true).build())
                 .collect(Collectors.toList());
 
         memberMissionRepository.saveAll(memberMissions);
-
-//        firebaseCloudMessageService.sendMessageTo();
 
     }
 

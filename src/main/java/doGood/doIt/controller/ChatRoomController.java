@@ -15,10 +15,10 @@ public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
 
-    @GetMapping
-    public ResponseEntity<ChatRoomListResponse> findAllChatRooms() {
+    @GetMapping("/{memberId}")
+    public ResponseEntity<Response> findAllChatRooms(@PathVariable Long memberId) {
         return ResponseEntity.ok()
-                .body(chatRoomService.listAll());
+                .body(chatRoomService.listAll(memberId));
     }
 
     @GetMapping("/status/{roomId}")

@@ -18,11 +18,11 @@ public class Friend {
     @EmbeddedId
     private Key key = new Key();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
     private Member user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("memberId")
     private Member member;
 

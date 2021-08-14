@@ -1,5 +1,6 @@
 package doGood.doIt.controller;
 
+import doGood.doIt.dto.AcceptMissionRequest;
 import doGood.doIt.dto.MissionFriendAddRequest;
 import doGood.doIt.dto.response.MissionDetailResponse;
 import doGood.doIt.dto.response.MissionFriendListResponse;
@@ -34,6 +35,16 @@ public class MissionController {
     public ResponseEntity<MissionFriendListResponse> missionFriendList(@PathVariable("missionId") Long missionId, @PathVariable("memberId") Long memberId) {
         return ResponseEntity.ok()
                 .body(missionService.myfriendListAll(missionId,memberId));
+    }
+
+    @PostMapping("/accept")
+    public void acceptFriendMission(@RequestBody AcceptMissionRequest request) {
+        missionService.acceptMissionFriend(request);
+    }
+
+    @PostMapping("/invite")
+    public void inviteFriendMission(@RequestBody MissionFriendAddRequest request) {
+        missionService.MissionInviteFriend(request);
     }
 
 //    @PostMapping("/mission/room")

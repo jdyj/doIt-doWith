@@ -2,7 +2,9 @@ package doGood.doIt.service;
 
 import doGood.doIt.domain.ChatRoom;
 import doGood.doIt.domain.Image;
+import doGood.doIt.domain.Member;
 import doGood.doIt.domain.MemberChatRoom;
+import doGood.doIt.dto.ChatRoomDto;
 import doGood.doIt.dto.response.ChatRoomListResponse;
 import doGood.doIt.dto.ChatRoomMemberStatusDto;
 import doGood.doIt.dto.response.Response;
@@ -23,10 +25,23 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
     private final MemberChatRoomRepository memberChatRoomRepository;
 
-    public ChatRoomListResponse listAll() {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAll();
+    public Response listAll(Long memberId) {
 
-        ChatRoomListResponse response = new ChatRoomListResponse(chatRooms.size(), chatRooms);
+        Member member = memberRepository.findById(memberId).get();
+        List<MemberChatRoom> memberChatRooms = memberChatRoomRepository.findMemberChatRoomsByMember(member);
+        List<ChatRoomDto> collect = memberChatRooms.stream()
+                .map(memberChatRoom -> {
+                    List<MemberChatRoom> memberChatRoomsByChatRoom = memberChatRoomRepository.findMemberChatRoomsByChatRoom(memberChatRoom.getChatRoom());
+                    return new ChatRoomDto(memberChatRoom.getChatRoom().getId(),
+                            memberChatRoom.getChatRoom().getMission().getName(),
+                            memberChatRoom.getChatRoom().getMission().getSponser(),
+                            memberChatRoom.getChatRoom().getMission().getStartDate(),
+                            memberChatRoomsByChatRoom.stream()
+                                .map(memberChatRoom1 -> memberChatRoom1.getMember().getProfileUrl())
+                                .collect(Collectors.toList()),
+                            memberChatRoom.getChatRoom().getRoomStatus());
+                }).collect(Collectors.toList());
+        Response response = new Response(collect.size(), collect);
 
         return response;
     }
@@ -42,7 +57,6 @@ public class ChatRoomService {
                 .collect(Collectors.toList());
 
         return new Response(collect.size(), collect);
-
     }
 
 //    public ChatRoomCreateResponse createRoom(ChatRoomCreateRequest request) {

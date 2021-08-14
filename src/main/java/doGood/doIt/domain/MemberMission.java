@@ -14,21 +14,21 @@ public class MemberMission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
 
-    private Boolean isCheck;
+    private Boolean isActive;
 
     @Builder
-    public MemberMission(Member member, Mission mission, Boolean isCheck) {
+    public MemberMission(Member member, Mission mission, Boolean isActive) {
         this.member = member;
         this.mission = mission;
-        this.isCheck = isCheck;
+        this.isActive = isActive;
     }
 
     protected MemberMission() {

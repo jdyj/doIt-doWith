@@ -1,9 +1,6 @@
 package doGood.doIt.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -17,43 +14,29 @@ import java.util.List;
 public class ChatMessage {
 
 
-    @EmbeddedId
-    private Key key;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("roomId")
     private ChatRoom room;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("memberId")
-    private Member writer;
+    private Member member;
 
     private String message;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @OneToOne
-    private Image image;
-
     @Builder
-    public ChatMessage(Key key, String message, LocalDateTime createdAt, Image image) {
-        this.key = key;
+    public ChatMessage(ChatRoom room, Member member, String message, LocalDateTime createdAt) {
+        this.room = room;
+        this.member = member;
         this.message = message;
         this.createdAt = createdAt;
-        this.image = image;
     }
 
     protected ChatMessage() {}
-
-    @Embeddable
-    @AllArgsConstructor
-    @Getter
-    public static class Key implements Serializable {
-        private Long roomId;
-        private Long memberId;
-
-        protected Key() {}
-    }
 
 }

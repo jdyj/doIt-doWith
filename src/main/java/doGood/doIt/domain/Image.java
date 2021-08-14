@@ -21,9 +21,6 @@ public class Image {
     @JoinColumn(name = "mission_id")
     private Mission mission;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private ChatMessage chatMessage;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_chat_room_id")
     private MemberChatRoom memberChatRoom;

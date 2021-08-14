@@ -27,6 +27,11 @@ public class MemberChatRoom {
     @OneToMany(mappedBy = "memberChatRoom")
     private List<Image> images = new ArrayList<>();
 
+    public void setImage(Image image) {
+        this.images.add(image);
+        image.setMemberChatRoom(this);
+    }
+
     @Builder
     public MemberChatRoom(Member member, ChatRoom chatRoom) {
         this.member = member;
