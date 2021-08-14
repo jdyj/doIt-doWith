@@ -27,4 +27,8 @@ public class MissionDto {
 
     private Boolean isActive;
 
+    private String reward;
+
+    private String missionContent;
+
 }

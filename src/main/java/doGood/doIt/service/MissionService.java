@@ -59,7 +59,9 @@ public class MissionService {
                                 mission.getEndDate(),
                                 mission.getNumberOfParticipants(),
                                 mission.getImage().getUrl(),
-                                finalValid
+                                finalValid,
+                                mission.getReward(),
+                                mission.getMissionContent()
                         ))
                 .collect(Collectors.toList());
 

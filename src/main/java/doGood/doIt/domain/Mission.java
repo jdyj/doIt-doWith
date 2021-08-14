@@ -25,6 +25,8 @@ public class Mission {
 
     private String reward;
 
+    private String missionContent;
+
     private String numberOfParticipants;
 
     @OneToOne(fetch = FetchType.LAZY)
