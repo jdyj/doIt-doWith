@@ -2,8 +2,8 @@ package doGood.doIt.controller;
 
 import doGood.doIt.dto.FriendAcceptRequest;
 import doGood.doIt.dto.FriendAddRequest;
-import doGood.doIt.dto.response.FriendListResponse;
 import doGood.doIt.dto.response.FriendResponse;
+import doGood.doIt.dto.response.Response;
 import doGood.doIt.service.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class FriendController {
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<FriendListResponse> friendList(@PathVariable Long memberId) {
+    public ResponseEntity<Response> friendList(@PathVariable Long memberId) {
         return ResponseEntity.ok()
                 .body(friendService.friendList(memberId));
     }

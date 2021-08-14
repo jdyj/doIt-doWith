@@ -5,7 +5,6 @@ import doGood.doIt.domain.Image;
 import doGood.doIt.domain.Member;
 import doGood.doIt.domain.MemberChatRoom;
 import doGood.doIt.dto.ChatRoomDto;
-import doGood.doIt.dto.response.ChatRoomListResponse;
 import doGood.doIt.dto.ChatRoomMemberStatusDto;
 import doGood.doIt.dto.response.Response;
 import doGood.doIt.repository.ChatRoomRepository;

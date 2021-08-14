@@ -1,17 +1,14 @@
 package doGood.doIt.dto.response;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @AllArgsConstructor
-@Getter
-public class FriendListResponse<T> {
+public class MissionGuideResponse {
 
-    private int count;
-
-    private T data;
+    private List<String> imageUrl;
 
 }

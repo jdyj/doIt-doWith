@@ -6,8 +6,8 @@ import doGood.doIt.dto.MissionDto;
 import doGood.doIt.dto.MissionFriendAddRequest;
 import doGood.doIt.dto.MissionFriendDto;
 import doGood.doIt.dto.response.MissionDetailResponse;
-import doGood.doIt.dto.response.MissionFriendListResponse;
-import doGood.doIt.dto.response.MissionListResponse;
+import doGood.doIt.dto.response.MissionGuideResponse;
+import doGood.doIt.dto.response.Response;
 import doGood.doIt.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class MissionService {
     private final ChatRoomRepository chatRoomRepository;
     private final MemberChatRoomRepository memberChatRoomRepository;
 
-    public MissionListResponse listAll(Long memberId) {
+    public Response listAll(Long memberId) {
 
         List<Mission> missions = missionRepository.findAll();
         Member member = memberRepository.findById(memberId).get();
@@ -65,7 +65,7 @@ public class MissionService {
                         ))
                 .collect(Collectors.toList());
 
-        return new MissionListResponse(collect.size(), collect);
+        return new Response(collect.size(), collect);
     }
 
     public MissionDetailResponse detailAll(Long memberId ,Long missionId) {
@@ -93,7 +93,7 @@ public class MissionService {
         return response;
     }
 
-    public MissionFriendListResponse myfriendListAll(Long missionId, Long memberId) {
+    public Response myfriendListAll(Long missionId, Long memberId) {
 
         Member member = memberRepository.findById(memberId).get();
         Iterator<Friend> it = member.getFriends().iterator();
@@ -123,7 +123,7 @@ public class MissionService {
             }
             collect.add(new MissionFriendDto(friend.getName(), canInvite, friend.getProfileUrl()));
         }
-        return new MissionFriendListResponse(collect.size(), collect);
+        return new Response(collect.size(), collect);
     }
 
     public void acceptMissionFriend(AcceptMissionRequest request) {

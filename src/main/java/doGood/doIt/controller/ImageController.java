@@ -17,7 +17,7 @@ public class ImageController {
         FileInputStream fis = null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        String fileDir = "C:\\Users\\user\\prac\\src\\main\\resources\\images\\" + value;
+        String fileDir = "C:\\Users\\user\\doIt\\src\\main\\resources\\images\\" + value;
 
         try{
             fis = new FileInputStream(fileDir);

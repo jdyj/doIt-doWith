@@ -30,12 +30,14 @@ public class ChatController {
     @SendTo("/topic/rooms/{roomId}")
     public String enter(ChatMessageRequest request, @DestinationVariable String roomId) {
         chatMessageService.save(request, roomId);
+        log.info("웹소켓 통신");
         return request.getMessage();
     }
 
     @MessageMapping("/chat/image/{roomId}/{memberId}")
     @SendTo("/topic/rooms/{roomId}")
     public BinaryMessage enter(BinaryMessage message, @DestinationVariable String memberId, @DestinationVariable String roomId) {
+        log.info("웹소켓 통신시작");
         ByteBuffer byteBuffer = message.getPayload();
         System.out.println(message.getPayload());
         System.out.println(byteBuffer);
@@ -71,6 +73,7 @@ public class ChatController {
         byteBuffer.position(0); //파일을 저장하면서 position값이 변경되었으므로 0으로 초기화한다.
         //파일쓰기가 끝나면 이미지를 발송한다.
         imageService.upload(memberId, roomId);
+        log.info("웹소켓 통신완료");
         return new BinaryMessage(byteBuffer);
     }
 

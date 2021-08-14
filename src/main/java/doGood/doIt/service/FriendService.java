@@ -4,7 +4,7 @@ import doGood.doIt.domain.Member;
 import doGood.doIt.dto.FriendAcceptRequest;
 import doGood.doIt.dto.FriendAddRequest;
 import doGood.doIt.dto.MemberDto;
-import doGood.doIt.dto.response.FriendListResponse;
+import doGood.doIt.dto.response.Response;
 import doGood.doIt.repository.FriendRepository;
 import doGood.doIt.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +47,7 @@ public class FriendService {
     }
 
     @Transactional
-    public FriendListResponse friendList(Long memberId) {
+    public Response friendList(Long memberId) {
         Optional<Member> memberOptional = memberRepository.findById(memberId);
 
         if(memberOptional.isEmpty()) {
@@ -70,7 +70,7 @@ public class FriendService {
                 .map(member -> new MemberDto(member.getId(),member.getEmail(),member.getName(),member.getCode(),member.getProfileUrl()))
                 .collect(Collectors.toList());
 
-        return new FriendListResponse(collect.size(), collect);
+        return new Response(collect.size(), collect);
     }
 
     private void duplicateFriend(Long userId, Long memberId) {
