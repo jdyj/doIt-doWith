@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FriendService {
 
+    
     private final EntityManager em;
     private final FriendRepository friendRepository;
     private final MemberRepository memberRepository;
