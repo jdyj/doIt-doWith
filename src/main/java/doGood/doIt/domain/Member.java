@@ -43,7 +43,5 @@ public class Member {
         this.profileUrl = profileUrl;
         this.createdAt = createdAt;
     }
-
-
     protected Member() { }
 }
