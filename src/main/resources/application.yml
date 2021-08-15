@@ -6,6 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: create-drop
     properties:

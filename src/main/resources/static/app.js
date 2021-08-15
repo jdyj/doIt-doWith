@@ -13,7 +13,7 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/ws');
+    var socket = new SockJS('/chat');
     stompClient = Stomp.over(socket);
     // SockJS와 stomp client를 통해 연결을 시도.
     stompClient.connect({}, function (frame) {
