@@ -44,6 +44,5 @@ public class Member {
         this.createdAt = createdAt;
     }
 
-
     protected Member() { }
 }
